@@ -48,7 +48,7 @@ function getTime(date) {
  * '2024-01-30T00:00:00.000Z' => 'Tuesday'
  */
 function getDayName(date) {
-  const day = new Date(date).getDay();
+  const day = new Date(date).getUTCDay();
   const week = [
     'Sunday',
     'Monday',
@@ -74,7 +74,7 @@ function getDayName(date) {
  */
 function getNextFriday(date) {
   const currentDate = new Date(date);
-  const day = currentDate.getDay();
+  const day = currentDate.getUTCDay();
   let item = 6;
   if (day < 5) {
     item = 5 - day;

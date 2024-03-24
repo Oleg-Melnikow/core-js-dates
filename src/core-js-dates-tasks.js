@@ -114,59 +114,8 @@ function getCountDaysInMonth(month, year) {
  */
 
 function getCountDaysOnPeriod(dateStart, dateEnd) {
-  class DateItem {
-    constructor(date) {
-      this.date = new Date(date);
-      this.day = this.date.getDate();
-      this.month = this.date.getMonth();
-      this.year = this.date.getFullYear();
-    }
-  }
-
-  function daysOfMonth(date, monthCount) {
-    let monthDays = 0;
-    for (let i = 0; i < monthCount; i += 1) {
-      const currentMonth = date.month + i + 1;
-      monthDays += new Date(date.year, currentMonth, 0).getDate();
-    }
-    return monthDays;
-  }
-
-  function daysOfFirst(first) {
-    const firstDays = new Date(first.year, first.month, 0).getDate();
-    return firstDays - first.day;
-  }
-
-  let period = 0;
-  const first = new DateItem(dateStart);
-  const last = new DateItem(dateEnd);
-
-  if (first.year === last.year && first.month === last.month) {
-    period = last.day - first.day + 1;
-  }
-  if (first.year === last.year && first.month !== last.month) {
-    const monthCount = last.month - first.month - 1;
-    period = daysOfFirst(first) - last.day + 1;
-
-    period += daysOfMonth(first, monthCount);
-  }
-  if (first.year !== last.year) {
-    const monthInFirst = 11 - first.month;
-    if (monthInFirst) {
-      period += daysOfMonth(first, monthInFirst);
-    }
-
-    period += daysOfFirst(first) + 1;
-
-    let monthDays = 0;
-
-    for (let i = last.month; i > 0; i -= 1) {
-      monthDays += new Date(last.year, i, 0).getDate();
-    }
-    period += monthDays + last.day + 1;
-  }
-
-  return period;
+  const dayTime = 24 * 60 ** 2 * 1000;
+  return (new Date(dateEnd) - new Date(dateStart)) / dayTime + 1;
 }
 
 /**
